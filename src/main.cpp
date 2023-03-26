@@ -56,7 +56,10 @@ typedef struct{
   uint8_t verificacao;
 }pacote;
 pacote msg1;
+
+//Funções
 pacote montaPack(uint8_t *vetor);
+uint8_t * leMsg();
 
 // the setup function runs once when you press reset or power the board
 void setup() {  
@@ -71,16 +74,7 @@ void setup() {
 // the loop function runs over and over again forever
 void loop() {
 if(Serial.available()){
-  int i=0;
-  while(Serial.available()){
-        c=uint8_t(Serial.read()-uint8_t(32)); 
-        inf[i]=c;
-        //if(c!='\n') inf[i]=c;
-        //else inf[i]= '\0';
-        i++;
-        delay(10);  
-     }
-     montaPack(inf);
+  montaPack(leMsg());
   msg1 = montaPack(inf);
   Serial.print("Destino: ");
   Serial.print(msg1.destino, HEX);
@@ -138,6 +132,18 @@ pacote montaPack(uint8_t *vetor){
   }
   return(pack);
 
+}
+
+uint8_t * leMsg(){
+  int i=0;
+  uint8_t msg[8];
+  while(Serial.available()){
+        c=uint8_t(Serial.read()-uint8_t(32)); 
+        msg[i]=c;
+        i++;
+        delay(10);  
+     }
+     return(msg);
 }
 
 
