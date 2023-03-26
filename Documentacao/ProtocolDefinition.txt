@@ -1,0 +1,35 @@
+By: Junior Guilherme
+    Eng. Eletrônica
+
+                            Struct Protocol LRS (Lora Rural System):
+
+struct Pacote{
+  uint8_t destino;
+  uint8_t origem;
+  uint8_t tipo;
+  uint8_t *payload;
+  uint8_t Verificacao;
+};
+
+
+  1 Byte     1 Byte      1 Byte      x Byte      1 Byte
+___________ ___________ ___________ ___________ ___________
+ Destino     Origem       Tipo        payload    Verificacao
+
+ 
+ 
+
+ 
+ tipo    CODE           Payloads                                     Descissão
+ ACK     0               (1 Byte) Respostas:  0->Ok                    Resposta sobre mensagens e comandos podendo ser positiva ou negativa (ACK) 
+                                             1->Erro Verificacao
+
+ NivelC   1              (1 Byte)  Valor: Nível da caixa              Leva o nível de água da caixa no payload (Caixa -> Central)
+
+ NivelB   2              (1 Byte)  Valor: Nível de Bateria            Leva o nível de tensão da bateria no payload (Bomba->Central)
+
+ ComB     3              (1 Byte)  Respostas: 0-> Desliga Bomba       Leva a informação de ligar ou desligar a bomba (Central->Bomba)
+                                             1-> Liga bomba
+
+ RespB    4              (1 Byte)  Retorno:   0-> Bomba não ligou     Leva informação sobre ligamento ou não da bomba após recebimento de comando (bomba->Caixa)
+                                              1-> Bomba Ligou
